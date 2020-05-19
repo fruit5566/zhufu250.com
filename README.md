@@ -13,15 +13,15 @@ koa2 + mysql + nginx
 ORM: sequlize
 ```
 ```
-|-- config  配置文件
-|-- controller  路由控制层，输入、输出数据的处理、异常处理
-|-- db_shema 数据库表结构，每张表对应一个文件
-|-- db_model 数据库控制层，对应表的增、删、改、查
-|-- libs 通用功能：微服务、爬虫等
-|-- router 路由，和前端页面对应
-|-- test 单元测试、功能函数测试
-|-- tmp -- 临时文件，保存网站icon
-|-- app.js 入口文件
+├─ config  配置文件
+├─ controller  路由控制层，输入、输出数据的处理、异常处理
+├─ db_shema 数据库表结构，每张表对应一个文件
+├─ db_model 数据库控制层，对应表的增、删、改、查
+├─ libs 通用功能：微服务、爬虫等
+├─ router 路由，和前端页面对应
+├─ test 单元测试、功能函数测试
+├─ tmp -- 临时文件，保存网站icon
+└─ app.js 入口文件
 ```
 
 #### NOTICE
