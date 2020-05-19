@@ -25,6 +25,6 @@ sequelize
     });
 
 // 表不存在，则创建表
-// sequelize.sync()
+sequelize.sync()
 
 module.exports = sequelize

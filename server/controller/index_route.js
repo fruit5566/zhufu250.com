@@ -13,7 +13,7 @@ class IndexRouteAction {
     /** 新建书签 */
     static async createBookmark(ctx) {
         try {
-            const {
+            let {
                 url,
                 title,
                 desc
