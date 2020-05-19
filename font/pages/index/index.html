@@ -4,400 +4,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小白 小豆腐</title>
-    <link rel="stylesheet" href="common.css">
-    <link rel="stylesheet" href="index.css">
+    
+    <title>大魔王竹</title>
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <!-- <script 
+        src="https://www.bilibili.com/gentleman/polyfill.js?features=Promise%2CObject.assign%2CString.prototype.includes%2CNumber.isNaN">
+        </script> -->
+    <script src="./js/polyfill.js"></script>
+    <script src="./js/vue.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <style>
-        /* body {
-            height: 1200px;
-        } */
-
-        .nav {
-            position: fixed;
-            width: 100%;
-            height: 56px;
-            line-height: 56px;
-            top: 0;
-            left: 0;
+        .modal-dialog {
+            width: 600px;
+            margin: 50px auto;
             background-color: #ffffff;
-            z-index: 999;
-            border-bottom: 1px solid #e5e5e5;
-            border-top: 1px px solid #009a61;
-            /* box-shadow: 0 1px 1px rgba(0,0,0,0.05), 0 1px 0 rgba(0,0,0,0.05); */
-        }
-
-        .container::before,
-        .container::after,
-        .nav::before,
-        .nav::after {
-            content: " ";
-            display: table;
-        }
-
-        #main {
-            box-sizing: border-box;
-            margin-top: 56px;
-            /* overflow:hidden; */
-            /* min-height: 500px; */
-        }
-
-        .footer {
-            /* height: 100px; */
-            padding: 10px;
             text-align: center;
-            background-color: #fafafa;
-            
-        }
-
-        .footer a {
-            font-size: 13px;
-            color: #999;
-        }
-        .github {
-            /* position: absolute; */
-            /* top: 15px; */
-            /* right: -60px; */
-            /* z-index: 1000; */
-            /* width: 200px; */
-            /* height: 44px; */
-            /* line-height: 44px; */
-            /* text-align: center; */
-            /* color: #ffffff; */
-            /* background-color: #ea6f5a; */
-            /* background-color: #009a61; */
-            /* transform-origin: right bottom; */
-            /* transform: rotate(45deg); */
-        }
-
-        /* .github:hover {
-            background-color: #ec6149;
-        } */
-
-        .container {
+            border-radius: 7px;
             overflow: hidden;
-            width: 960px;
-            height: 100%;
-            margin: 0 auto;
         }
 
-
-
-        .left {
-            width: 66.66667%;
-            float: left;
+        .modal-footer {
+            padding: 20px;
+            padding-left: 60px;
         }
 
-        .right {
-            float: left;
-            width: 29.16667%;
-            margin-left: 4.16667%;
-        }
-
-        .note-list {
-            border-bottom: 1px solid #f0f0f0;
-            padding: 15px 0;
-        }
-
-        .title {
-            font-weight: 500;
-            font-size: 18px;
-            line-height: 28px;
-            color: #333;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            margin-bottom: 5px;
-            ;
-        }
-
-        .desc {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            line-height: 1.6;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .hot-num {
-            float: right;
-        }
-
-        .sec {
-            padding: 15px 0;
-        }
-
-        .sec-title {
-            font-weight: 700;
-            font-size: 16px;
-            line-height: 28px;
-            color: #555;
-            ;
-        }
-
-        .sec-list {
-            padding: 3px 0;
-            border-bottom: 1px solid #f3f3f3;
-        }
-
-        .s-title {
-            color: #555;
-            font-size: 14px;
-        }
-
-        .s-index {
+        .modal-footer .cancel,
+        .modal-footer .confirm {
             display: inline-block;
+            width: 200px;
             text-align: center;
-            min-width: 16px;
-            line-height: 100%;
-            color: #fff;
-            background-color: skyblue;
-        }
-
-        .s-index-hot1 {
-            background-color: #f54545;
-        }
-
-        .s-index-hot2 {
-            background-color: #ff8547;
-        }
-
-        .s-index-hot3 {
-            background-color: #ffac38;
-        }
-
-        .time {
-            font-size: 14px;
-            color: #888;
-            margin-top: 5px;
-        }
-
-        a:hover {
-            color: #017e66;
-            ;
-        }
-
-
-
-        .github,
-        .record,
-        .index {
-            font-size: 18px;
-            color: #009a61;
-            font-weight: 700;
-            margin-right: 30px;
+            height: 44px;
+            line-height: 44px;
+            border: 1px solid red;
+            margin: 0 15px;
             cursor: pointer;
-        }
-
-        .github {
-            /* border-bottom: 2px solid; */
-            margin-right: 100px;
-        }
-
-        .record {
-            padding: 8px 12px;
-            font-weight: normal;
-            background-color: #009a61;
+            border: 1px solid transparent;
             color: #ffffff;
-            line-height: 1;
-            font-size: 16px;
-            border-radius: 4px;
-            float: right;
-            margin-top: 12px;
-            margin-right: 20px;
+            border-radius: 6px;
         }
 
-        .search {
-            width: 300px;
-            margin: 0;
-            padding: 0;
-            display: inline-block;
-            height: 34px;
+        .modal-footer .cancel {
+            color: #000000;
+            background-color: #e6e6e6;
+        }
+
+        .modal-footer .confirm {
+            background-color: #009a61;
+        }
+
+        .modal-footer .cancel:hover {
+            background-color: #ccc;
+        }
+
+        .modal-footer .confirm:hover,
+        .record:hover {
+            background-color: #006741;
+            border-color: #00432a;
+        }
+
+        .modal-header {
+            height: 44px;
+            background-color: #f3f3f3;
+        }
+
+        .modal-body {
+            padding: 15px;
+        }
+
+        .modal-body textarea {
+            resize: none;
+        }
+
+        .m-row {
+            display: flex;
+            padding: 12px 20px;
+        }
+
+        .m-input {
+            width: 410px;
+            padding: 2px 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            padding: 0 12px;
-            ;
         }
 
-        .search:focus {
-            border: 1px solid #009a61;
-            -webkit-box-shadow: 0 0 3px 0px #009a61;
-            box-shadow: 0 0 3px 0px #009a61;
+        .m-label {
+            width: 60px;
+        }
+        .auto-fetch {
+            padding: 2px 6px;
+            color: #fff;
+            background-color: #009a61;
+            margin-left: 15px;;
+            border-radius: 4px;
+        }
+        
+        textarea:disabled {
+            background-color: #f3f3f3;
         }
 
-        .nav a:hover {
-            text-decoration: none;
-            border-bottom: 2px solid;
+        input:disabled {
+            background-color: #f3f3f3;
+        }
+        .icon {
+            width: 22px;
+            height: 22px;
+            margin-right: 8px;
+            margin-top: -2px;
         }
     </style>
 </head>
 
 <body>
 
-    <header class="nav">
-        <div class="container">
-            <a class="index" href="#">首页</a>
-            <a class="github" href="https://www.github.com/fruit5566/">GitHub</a>
-            <input type="text" placeholder="输入关键字" class="search">
-            <span class="record">收录网站</span>
-            <!-- <span class="record" >登录</span>
-            <span class="record" >注册</span> -->
-            <!-- <span class="record">注册</span>
-            <span class="record">登录</span> -->
-        </div>
+    <div id="app">
 
-        <!-- <a class="github" href="https://www.github.com/fruit5566/" target="_blank">
-            GitHub
-        </a> -->
-    </header>
-    <div id="main">
-        <div class="container">
-            <div class="left">
-                <div class="list">
-
-                    <div class="note-list">
-                        <div class="content">
-                            <a class="title" href="#">Flutter 10天高仿大厂App及小技巧积累总结</a>
-                            <div class="desc">
-                                之前，也写过几篇关于 Flutter 的博文，最近，又花了一些时间学习研究 Flutter，完成了高仿大厂 App 项目
-                                (项目使用的接口都是来自线上真实App抓包做到和线上项目相同的效果)，也总结积累了一些小技巧...
-                            </div>
-                            <div class="time">2020年12月15日 16:56 星期五</div>
-                        </div>
-                    </div>
-
-                    <div class="note-list">
-                        <div class="content">
-                            <a class="title" href="#">Flutter 10天高仿大厂App及小技巧积累总结</a>
-                            <div class="desc">
-                                之前，也写过几篇关于 Flutter 的博文，最近，又花了一些时间学习研究 Flutter，完成了高仿大厂 App 项目
-                                (项目使用的接口都是来自线上真实App抓包而来，可以做到和线上项目相同的效果)，也总结积累了一些小技巧...
-                            </div>
-                        </div>
-                    </div>
-                    <div class="note-list">
-                        <div class="content">
-                            <a class="title" href="#">Flutter 10天高仿大厂App及小技巧积累总结</a>
-                            <div class="desc">
-                                之前，也写过几篇关于 Flutter 的博文，最近，又花了一些时间学习研究 Flutter，完成了高仿大厂 App 项目
-                                (项目使用的接口都是来自线上真实App抓包而来，可以做到和线上项目相同的效果)，也总结积累了一些小技巧...
-                            </div>
-                        </div>
-                    </div>
-                    <div class="note-list">
-                        <div class="content">
-                            <a class="title" href="#">Flutter 10天高仿大厂App及小技巧积累总结</a>
-                            <div class="desc">
-                                之前，也写过几篇关于 Flutter 的博文，最近，又花了一些时间学习研究 Flutter，完成了高仿大厂 App 项目
-                                (项目使用的接口都是来自线上真实App抓包而来，可以做到和线上项目相同的效果)，也总结积累了一些小技巧...
-                            </div>
-                        </div>
-                    </div>
-                    <div class="note-list">
-                        <div class="content">
-                            <a class="title" href="#">Flutter 10天高仿大厂App及小技巧积累总结</a>
-                            <div class="desc">
-                                之前，也写过几篇关于 Flutter 的博文，最近，又花了一些时间学习研究 Flutter，完成了高仿大厂 App 项目
-                                (项目使用的接口都是来自线上真实App抓包而来，可以做到和线上项目相同的效果)，也总结积累了一些小技巧...
-                            </div>
-                        </div>
-                    </div>
-                    <div class="note-list">
-                        <div class="content">
-                            <a class="title" href="#">Flutter 10天高仿大厂App及小技巧积累总结</a>
-                            <div class="desc">
-                                之前，也写过几篇关于 Flutter 的博文，最近，又花了一些时间学习研究 Flutter，完成了高仿大厂 App 项目
-                                (项目使用的接口都是来自线上真实App抓包而来，可以做到和线上项目相同的效果)，也总结积累了一些小技巧...
-                            </div>
-                        </div>
-                    </div>
-                    <div class="note-list">
-                        <div class="content">
-                            <a class="title" href="#">Flutter 10天高仿大厂App及小技巧积累总结</a>
-                            <div class="desc">
-                                之前，也写过几篇关于 Flutter 的博文，最近，又花了一些时间学习研究 Flutter，完成了高仿大厂 App 项目
-                                (项目使用的接口都是来自线上真实App抓包而来，可以做到和线上项目相同的效果)，也总结积累了一些小技巧...
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
+        <header class="nav">
+            <div class="container">
+                <a class="index" href="#">首页</a>
+                <a class="github" href="https://www.github.com/fruit5566/" target="_blank">GitHub</a>
+                <a class="index" href="https://zhufu250.com/" target="_blank" title="后台管理系统">CMS</a>
+                <a class="index" @click='download'>下载</a>
+                <input type="text" placeholder="功能开发中..." class="search" title="功能未开发">
+                <span class="record" @click="showdialog">收录网站</span>
             </div>
-            <div class="right">
-                <div class="sec recommend">
-                    <div class="sec-title">推荐工具</div>
-                    <div class="">
-                        <!-- <span class="s-index s-index-hot1">1</span> -->
-                        <a class="s-title" href="https://www.baidu.com/" target="_blank">错换人生28年事件医患调解无果</a>
-                    </div>
-                    <div class="">
-                        <!-- <span class="s-index s-index-hot2">2</span> -->
-                        <a class="s-title" href="https://www.baidu.com/" target="_blank">错换人生28年事件医患调解无果</a>
-                    </div>
-                    <div class="">
-                        <!-- <span class="s-index s-index-hot3">3</span> -->
-                        <a class="s-title" href="https://www.baidu.com/" target="_blank">错换人生28年事件医患调解无果</a>
-                    </div>
-                    <div class="">
-                        <!-- <span class="s-index">4</span> -->
-                        <a class="s-title" href="https://www.baidu.com/" target="_blank">错换人生28年事件医患调解无果</a>
-                    </div>
-                    <div class="">
-                        <!-- <span class="s-index ">5</span> -->
-                        <a class="s-title" href="https://www.baidu.com/" target="_blank">错换人生28年事件医患调解无果</a>
-                    </div>
+        </header>   
+        <div id="main">
+            <div class="container"> 
+
+                <div class="left">
+                    <transition name="fade">
+                        <div class="list" v-show="bookmarks.length">
+                            <div class="note-list" v-for="item in bookmarks" :key="item.id">
+                                <div class="content">
+                                    <!-- <a class="title" :href="item.url"  target="_blank"><img class="icon" :src="item.icon?item.icon:'favicon.png'" @error="imgError">{{item.title}}</a> -->
+                                    <div class="desc">
+                                        {{item.desc}}
+                                    </div>
+                                    <div class="time">{{new Date(item.created_at).toLocaleString()}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
                 </div>
-
-                <div class=" sec hot-news">
-                    <!-- <div class="sec"></div> -->
-                    <div class="sec-title">百度热搜</div>
-
-                    <div class="sec-list">
-                        <!-- <span class="s-index s-index-hot1">1</span> -->
-                        <a class="s-title" href="https://www.baidu.com/" target="_blank">错换人生28年事件医患调解无果</a>
-                        <span class="hot-num">500万</span>
-                    </div>
-                    <div class="sec-list">
-                        <!-- <span class="s-index s-index-hot2">2</span> -->
-                        <a class="s-title" href="https://www.baidu.com/" target="_blank">错换人生28年事件医患调解无果</a>
-                        <span class="hot-num">500万</span>
-                    </div>
-                    <div class="sec-list">
-                        <!-- <span class="s-index s-index-hot3">3</span> -->
-                        <a class="s-title" href="https://www.baidu.com/" target="_blank">错换人生28年事件医患调解无果</a>
-                        <span class="hot-num">500万</span>
-                    </div>
-                    <div class="sec-list">
-                        <!-- <span class="s-index ">3</span> -->
-                        <a class="s-title" href="https://www.baidu.com/" target="_blank">错换人生28年事件医患调解无果</a>
-                        <span class="hot-num">500万</span>
-                    </div>
-                    <div class="sec-list">
-                        <!-- <span class="s-index ">3</span> -->
-                        <a class="s-title" href="https://www.baidu.com/" target="_blank">错换人生28年事件医患调解无果</a>
-                        <span class="hot-num">500万</span>
-                    </div>
-                    <div class="sec-list">
-                        <!-- <span class="s-index ">3</span> -->
-                        <a class="s-title" href="https://www.baidu.com/" target="_blank">错换人生28年事件医患调解无果</a>
-                        <span class="hot-num">500万</span>
-                    </div>
+                <div class="right">
+                    <div class="sec recommend">
+                        <div class="sec-title">推荐工具</div>
+                        <transition name="fade" mode="">
+                            <div v-show="recommendlist.length">
+                                <div class="" v-for="item in recommendlist">
+                                    <!-- <span class="s-index s-index-hot1">1</span> -->
+                                    <a class="s-title" :href="item.url" target="_blank">{{item.title}}</a>
+                                </div>
+                            </div>
+                        </transition>
 
 
+                    </div>
 
+                    <div class=" sec hot-news">
+                        <div class="sec-title">百度热搜</div>
+                        <transition name="fade">
+                            <div v-show="hostlist.length">
+                                <div class="sec-list" v-for="item in hostlist">
+                                    <!-- <span class="s-index s-index-hot1">1</span> -->
+                                    <a class="s-title" :href="'https://www.baidu.com/s?wd=' + item.name"
+                                        target="_blank">{{item.name}}</a>
+                                    <span class="hot-num">{{item.num}}</span>
+                                </div>
+                            </div>
+                        </transition>
+                    </div>
                 </div>
             </div>
         </div>
+        <footer class="footer" style="display: none;" v-show="bookmarks.length">
+            <a href="http://www.beian.miit.gov.cn/">©2020 苏ICP备20002170号 </a>
+
+        </footer>
+        <transition name="fade">
+
+            <div class="mask" v-show="dialog" style="display: none;">
+
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header"></div>
+                        <div class="modal-body">
+                            <div class="m-row">
+                                <span class="m-label">网址: </span> <input class="m-input" type="text" placeholder="输入网址按Enter键，自动抓取标题和简介"
+                                    v-model="recordmeta.url"  @paste='pasteHandle' @keyup.enter='autoFetchTitle'>
+                            </div>
+                            <div class="m-row">
+                                <span class="m-label">标题:</span><input :disabled="disabled"  class="m-input" type="text" placeholder=""
+                                    v-model="recordmeta.title">
+                                <!-- <span class="auto-fetch" @click='autoFetchTitle'>auto</span> -->
+                            </div>
+                            <div class="m-row">
+                                <span class="m-label">简介:</span><textarea rows="5"  :disabled="disabled"  class="m-input" placeholder=""
+                                    v-model="recordmeta.desc"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="cancel" @click="cancel">取消</div>
+                            <div class="confirm" @click="confirm">确认</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </transition>
     </div>
-    <footer class="footer">
-        <a href="http://www.beian.miit.gov.cn/">©2020  苏ICP备20002170号 </a>
+    <script src="./js/index.js"></script>
 
-    </footer>
 </body>
 
 </html>
