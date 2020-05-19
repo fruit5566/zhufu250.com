@@ -218,3 +218,88 @@ a:hover {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 99999;
 }
+
+.modal-dialog {
+    width: 600px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    text-align: center;
+    border-radius: 7px;
+    overflow: hidden;
+}
+.modal-footer {
+    padding: 20px;
+    padding-left: 60px;
+}
+.modal-footer .cancel,
+.modal-footer .confirm {
+    display: inline-block;
+    width: 200px;
+    text-align: center;
+    height: 44px;
+    line-height: 44px;
+    border: 1px solid red;
+    margin: 0 15px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    color: #ffffff;
+    border-radius: 6px;
+}
+.modal-footer .cancel {
+    color: #000000;
+    background-color: #e6e6e6;
+}
+.modal-footer .confirm {
+    background-color: #009a61;
+}
+.modal-footer .cancel:hover {
+    background-color: #ccc;
+}
+.modal-footer .confirm:hover,
+.record:hover {
+    background-color: #006741;
+    border-color: #00432a;
+}
+.modal-header {
+    height: 44px;
+    background-color: #f3f3f3;
+}
+.modal-body {
+    padding: 15px;
+}
+.modal-body textarea {
+    resize: none;
+}
+.m-row {
+    display: flex;
+    padding: 12px 20px;
+}
+.m-input {
+    width: 410px;
+    padding: 2px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.m-label {
+    width: 60px;
+}
+.auto-fetch {
+    padding: 2px 6px;
+    color: #fff;
+    background-color: #009a61;
+    margin-left: 15px;;
+    border-radius: 4px;
+}
+textarea:disabled {
+    background-color: #f3f3f3;
+}
+
+input:disabled {
+    background-color: #f3f3f3;
+}
+.icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 8px;
+    margin-top: -2px;
+}
