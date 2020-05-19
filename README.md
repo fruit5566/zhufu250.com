@@ -20,7 +20,7 @@ ORM: sequlize
 |-- libs 通用功能：微服务、爬虫等
 |-- router 路由，和前端页面对应
 |-- test 单元测试、功能函数测试
-|--tmp -- 临时文件，保存网站icon
+|-- tmp -- 临时文件，保存网站icon
 |-- app.js 入口文件
 ```
 
