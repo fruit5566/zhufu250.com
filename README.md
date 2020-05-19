@@ -9,7 +9,7 @@ vue + axios + polyfill
 ```
 #### 后端 server
 ```
-koa2 + mysql
+koa2 + mysql + nginx
 ORM: sequlize
 ```
 ```
@@ -35,3 +35,4 @@ gm 图片处理安装 GraphicsMagick
 >* 前端 改单文件.vue + webpack
 >* 首屏服务端渲染 SSR
 >* CMS后台系统开发，书签的审核、导出、删除等
+>* GitHub 钩子自动发布系统
