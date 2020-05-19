@@ -12,7 +12,7 @@ var app = new Vue({
       desc: ''
     },
     disabled: true,
-    baseUrl: 'http://localhost:3000'
+    baseUrl: 'https://zhufu250.com/api'
   },
   methods: {
     cancel: function () {
@@ -24,7 +24,7 @@ var app = new Vue({
         const meta = Object.assign({
           id: res.data.data.id
         }, this.recordmeta)
-        // this.bookmarks.unshift(meta)
+        this.bookmarks.unshift(meta)
         this.recordmeta = {}
         this.dialog = false
         this.disabled = true

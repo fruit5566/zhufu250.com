@@ -10,10 +10,7 @@ let block = false
 
 const pageInit = async () => {
     block = true
-    browser = await puppeteer.launch({
-        // headless: false,
-        // devtools: true
-    });
+    browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     page = await browser.newPage();
 
     /** 拦截请求，除了html，其余请求全部拦截，接口变快 */

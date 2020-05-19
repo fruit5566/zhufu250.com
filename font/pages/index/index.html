@@ -124,7 +124,7 @@
             <div class="container">
                 <a class="index" href="#">首页</a>
                 <a class="github" href="https://www.github.com/fruit5566/" target="_blank">GitHub</a>
-                <a class="index" href="https://zhufu250.com/" target="_blank" title="后台管理系统">CMS</a>
+                <a class="index" href="https://zhufu250.com/cms" target="_blank" title="后台管理系统">CMS</a>
                 <a class="index" @click='download'>下载</a>
                 <input type="text" placeholder="功能开发中..." class="search" title="功能未开发">
                 <span class="record" @click="showdialog">收录网站</span>
@@ -138,7 +138,7 @@
                         <div class="list" v-show="bookmarks.length">
                             <div class="note-list" v-for="item in bookmarks" :key="item.id">
                                 <div class="content">
-                                    <!-- <a class="title" :href="item.url"  target="_blank"><img class="icon" :src="item.icon?item.icon:'favicon.png'" @error="imgError">{{item.title}}</a> -->
+                                    <a class="title" :href="item.url"  target="_blank"><img class="icon" :src="item.icon?item.icon:'favicon.png'" @error="imgError">{{item.title}}</a>
                                     <div class="desc">
                                         {{item.desc}}
                                     </div>
