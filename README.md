@@ -29,3 +29,10 @@ ORM: sequlize
 puppeteer 先安装chrome内核浏览器
 gm 图片处理需先安装 GraphicsMagick
 ```
+
+
+#### TODO
+- 前端 改单文件.vue + webpack
+- 首屏服务端加载 SSR
+- CMS后台系统开发，书签的审核、删除等
+ 
