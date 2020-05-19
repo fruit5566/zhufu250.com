@@ -14,6 +14,19 @@ var app = new Vue({
     disabled: true,
     baseUrl: 'https://zhufu250.com/api'
   },
+  created: function(){
+    axios.get(`${this.baseUrl}/hotnews`).then(res => {
+      app.hostlist = res.data.data
+    })
+    
+    axios.get(`${this.baseUrl}/bookmarks`).then(res => {
+      app.bookmarks = res.data.data
+    })
+    
+    axios.get(`${this.baseUrl}/recommends`).then(res => {
+      app.recommendlist = res.data.data
+    })
+  },
   methods: {
     cancel: function () {
       this.dialog = false
@@ -43,6 +56,7 @@ var app = new Vue({
       })
     },
     pasteHandle: function (el) {
+      console.log(this.recordmeta.url)
       setTimeout(() => {
         console.log(this.recordmeta.url)
         this.autoFetchTitle()
@@ -62,17 +76,7 @@ var app = new Vue({
 })
 
 
-axios.get(`${app.baseUrl}/hotnews`).then(res => {
-  app.hostlist = res.data.data
-})
 
-axios.get(`${app.baseUrl}/bookmarks`).then(res => {
-  app.bookmarks = res.data.data
-})
-
-axios.get(`${app.baseUrl}/recommends`).then(res => {
-  app.recommendlist = res.data.data
-})
 
 const saveAs = (blob, filename) => {
   if (window.navigator.msSaveOrOpenBlob) {

@@ -88,17 +88,17 @@
                         <div class="modal-body">
                             <div class="m-row">
                                 <span class="m-label">网址: </span> <input class="m-input" type="text"
-                                    placeholder="输入网址按Enter键，自动抓取标题和简介" v-model="recordmeta.url" @paste='pasteHandle'
+                                    placeholder="输入网址按Enter键，自动抓取标题和简介" v-model.trim="recordmeta.url" @paste='pasteHandle'
                                     @keyup.enter='autoFetchTitle'>
                             </div>
                             <div class="m-row">
                                 <span class="m-label">标题:</span><input :disabled="disabled" class="m-input" type="text"
-                                    placeholder="" v-model="recordmeta.title">
+                                    placeholder="" v-model.trim="recordmeta.title">
                                 <!-- <span class="auto-fetch" @click='autoFetchTitle'>auto</span> -->
                             </div>
                             <div class="m-row">
                                 <span class="m-label">简介:</span><textarea rows="5" :disabled="disabled" class="m-input"
-                                    placeholder="" v-model="recordmeta.desc"></textarea>
+                                    placeholder="" v-model.trim="recordmeta.desc"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
