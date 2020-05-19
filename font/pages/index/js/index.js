@@ -21,9 +21,11 @@ var app = new Vue({
     },
     confirm: function () {
       axios.post(`${this.baseUrl}/bookmark`, this.recordmeta).then(res => {
-        const meta = Object.assign({
+        let meta = Object.assign({
           id: res.data.data.id
         }, this.recordmeta)
+        meta.created_at = new Date().getTime()
+        console.log(meta)
         this.bookmarks.unshift(meta)
         this.recordmeta = {}
         this.dialog = false
