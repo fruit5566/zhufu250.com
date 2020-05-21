@@ -57,7 +57,7 @@ export default {
     pasteHandle() {
       setTimeout(() => {
         if (!URL_REG.test(this.meta.url)) {
-          alert("网址不合法");
+          this.$toast("网址不合法")
           return;
         }
         axios
@@ -76,7 +76,7 @@ export default {
     },
     createBookmark() {
       if (!URL_REG.test(this.meta.url)) {
-        alert("网址不合法");
+        this.$toast("网址不合法")
         return;
       }
       axios
@@ -110,11 +110,15 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
 }
 .modal-dialog {
+  position: relative;
+  top: 15%;
+  left: 50%;
   width: 600px;
-  margin: 50px auto;
+  transform: translate(-50%);
   background-color: #ffffff;
   border-radius: 7px;
   overflow: hidden;
+
 }
 .modal-header {
   height: 44px;

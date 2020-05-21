@@ -3,16 +3,17 @@
     <Header />
     <IndexMain :tmpBookmark="tmpBookmark" />
     <Footer />
-    <IndexMask v-if="visibleDialog" />
+    <transition name="fade">
+      <IndexMask v-if="visibleDialog" />
+    </transition>
   </div>
 </template>
 
 <script>
 import Header from "./components/Header.vue";
-import Footer from "./components/Footer"
-import IndexMain from "./components/IndexMain"
-import IndexMask from "./components/plugin/IndexMask"
-
+import Footer from "./components/Footer";
+import IndexMain from "./components/IndexMain";
+import IndexMask from "./components/plugin/IndexMask";
 
 export default {
   name: "App",
@@ -26,7 +27,7 @@ export default {
     return {
       visibleDialog: false,
       tmpBookmark: {}
-    }
+    };
   }
 };
 </script>
@@ -201,9 +202,23 @@ ul {
   opacity: 0;
 }
 
+.slide {
+  position: relative;
+}
+.slide-enter-active,
+.slide-leave-active {
+  transition:  0.5s;
+}
+
+.slide-enter,
+.slide-leave-to {
+  opacity: 0;
+  transform: translate(-50%,-100%) !important;
+}
+
+
 .container {
   width: 960px;
   margin: 0 auto;
 }
-
 </style>

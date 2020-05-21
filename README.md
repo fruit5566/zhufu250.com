@@ -5,7 +5,7 @@
 ```
 #### 前端 front
 ```
-vue + axios + polyfill
+vue  @vue/cli
 ```
 #### 后端 server
 ```
