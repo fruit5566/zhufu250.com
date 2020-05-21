@@ -1,73 +1,85 @@
+<template>
+  <div id="app">
+    <Header />
+    <IndexMain :tmpBookmark="tmpBookmark" />
+    <Footer />
+    <IndexMask v-if="visibleDialog" />
+  </div>
+</template>
 
-html {
-  font-family: sans-serif;
-  -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
+<script>
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer"
+import IndexMain from "./components/IndexMain"
+import IndexMask from "./components/plugin/IndexMask"
+
+
+export default {
+  name: "App",
+  components: {
+    Header,
+    Footer,
+    IndexMain,
+    IndexMask
+  },
+  data() {
+    return {
+      visibleDialog: false,
+      tmpBookmark: {}
+    }
+  }
+};
+</script>
+
+<style>
+#app {
+  width: 100%;
 }
-
 body {
-  font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
-  margin: 0;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
-  line-height: 1.42857143;
-  color: #333;
-  background-color: #fff;
-  /* min-height: 1000px; */
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  text-align: center;
+  color: #2c3e50;
+  margin: 0;
 }
-
 * {
   -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 *:before,
 *:after {
   -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
-
-footer,
-header {
-  display: block;
-}
-
 ::-webkit-scrollbar {
-    width: 14px;
-    height: 14px;
+  width: 14px;
+  height: 14px;
 }
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(50,50,50,0.25);
-    border: 2px solid transparent;
-    border-radius: 10px;
-    background-clip: padding-box;
+  background-color: rgba(50, 50, 50, 0.25);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background-clip: padding-box;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(50,50,50,0.5);
+  background-color: rgba(50, 50, 50, 0.5);
 }
 ::-webkit-scrollbar-track {
-    background-color: rgba(50,50,50,0.05);
+  background-color: rgba(50, 50, 50, 0.05);
 }
-::-ms-clear, ::-ms-reveal{display: none;}
-
-input::-webkit-input-placeholder { /* WebKit browsers*/
-  color: #999 !important;
-  font-weight: 400;
+::-ms-clear,
+::-ms-reveal {
+  display: none;
 }
 
-input:-moz-placeholder { /* Mozilla Firefox 4 to 18*/
+input::placeholder {
   color: #999 !important;
-  font-weight: 400;
-}
-
-input::-moz-placeholder { /* Mozilla Firefox 19+*/
-  color: #999 !important;
-  font-weight: 400;
-}
-
-input:-ms-input-placeholder { /* Internet Explorer 10+*/
-  color: #999 !important;
-  font-weight: 400;
 }
 
 a {
@@ -80,7 +92,7 @@ a:active,
 a:hover {
   outline: 0;
   border: 0;
-  text-decoration:underline;
+  text-decoration: underline;
 }
 
 img {
@@ -89,14 +101,6 @@ img {
   border: 0;
   vertical-align: middle;
 }
-svg:not(:root) {
-  overflow: hidden;
-}
-
-pre {
-  overflow: auto;
-}
-
 button,
 input,
 select,
@@ -142,8 +146,8 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 input[type="search"] {
   -webkit-box-sizing: content-box;
-     -moz-box-sizing: content-box;
-          box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
   -webkit-appearance: textfield;
 }
 input[type="search"]::-webkit-search-cancel-button,
@@ -154,7 +158,6 @@ input[type="search"]::-webkit-search-decoration {
 textarea {
   overflow: auto;
 }
-
 table {
   border-spacing: 0;
   border-collapse: collapse;
@@ -165,7 +168,6 @@ th {
   padding: 0;
 }
 
-
 input,
 button,
 select,
@@ -174,7 +176,9 @@ textarea {
   font-size: inherit;
   line-height: inherit;
 }
-
+input {
+  border: none;
+}
 ul {
   margin: 0;
   padding: 0;
@@ -188,9 +192,18 @@ ul {
   display: table;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
+
+.container {
+  width: 960px;
+  margin: 0 auto;
+}
+
+</style>
