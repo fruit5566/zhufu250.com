@@ -5,7 +5,7 @@
 ```
 #### 前端 front
 ```
-vue  vue-cli3
+vue  @vue/cli
 ```
 #### 后端 server
 ```
