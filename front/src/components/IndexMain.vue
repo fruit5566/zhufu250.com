@@ -56,7 +56,6 @@ export default {
   watch: {
     tmpBookmark(val) {
       this.bookmarks.unshift(val)
-      console.log(val)
     }
   }
 };

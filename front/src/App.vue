@@ -6,6 +6,7 @@
     <transition name="fade">
       <IndexMask v-if="visibleDialog" />
     </transition>
+    <ScrollTop></ScrollTop>
   </div>
 </template>
 
@@ -14,6 +15,7 @@ import Header from "./components/Header.vue";
 import Footer from "./components/Footer";
 import IndexMain from "./components/IndexMain";
 import IndexMask from "./components/plugin/IndexMask";
+import ScrollTop from "./components/plugin/ScrollTop"
 
 export default {
   name: "App",
@@ -21,7 +23,8 @@ export default {
     Header,
     Footer,
     IndexMain,
-    IndexMask
+    IndexMask,
+    ScrollTop
   },
   data() {
     return {

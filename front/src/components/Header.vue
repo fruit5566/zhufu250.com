@@ -28,7 +28,6 @@ export default {
       });
     },
     collect() {
-      // console.log(this.$parent.visibleDialog)
       this.$parent.visibleDialog = true
     },
     saveAs(blob, filename) {
