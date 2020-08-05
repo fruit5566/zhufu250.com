@@ -1,35 +1,33 @@
 <template>
-<div>
-  <div class="main container">
-    <div class="left">
-      <BookmarkItem v-for="item of bookmarks" :key="item.id" :item="item"></BookmarkItem>
-    </div>
-    <div class="right">
-      <div class="recommend sec">
-        <div class="title">推荐工具</div>
-        <RecommendItem v-for="item of recommends" :key="item.id" :item="item" />
+  <div>
+    <div class="main container">
+      <div class="left">
+        <BookmarkItem v-for="item of bookmarks" :key="item.id" :item="item"></BookmarkItem>
       </div>
-      <div class="hownews sec">
-        <div class="title">百度热搜</div>
-        <div class>
-          <HotNewsItem v-for="item of hotnews" :key="item.id" :item="item" />
+      <div class="right">
+        <div class="recommend sec">
+          <div class="title">推荐工具</div>
+          <RecommendItem v-for="item of recommends" :key="item.id" :item="item" />
+        </div>
+        <div class="hownews sec">
+          <div class="title">百度热搜</div>
+          <div class>
+            <HotNewsItem v-for="item of hotnews" :key="item.id" :item="item" />
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
- 
 </template>
 
 <script>
-import axios from "axios";
 import BookmarkItem from "./base/BookmarkItem";
 import RecommendItem from "./base/RecommendItem";
 import HotNewsItem from "./base/HotnewsItem";
+import { getMarkList, getRecomendList, getHotNews } from "../api/index";
 
 export default {
-  props:["tmpBookmark"],
+  props: ["tmpBookmark"],
   components: {
     BookmarkItem,
     RecommendItem,
@@ -43,21 +41,23 @@ export default {
     };
   },
   created() {
-    axios.get(`${process.env.VUE_APP_API_URL}/bookmarks`).then(res => {
-      this.bookmarks = res.data.data;
+    getMarkList().then((data) => {
+      this.bookmarks = data;
     });
-    axios.get(`${process.env.VUE_APP_API_URL}/recommends`).then(res => {
-      this.recommends = res.data.data;
+
+    getRecomendList().then((data) => {
+      this.recommends = data;
     });
-    axios.get(`${process.env.VUE_APP_API_URL}/hotnews`).then(res => {
-      this.hotnews = res.data.data;
+
+    getHotNews().then((data) => {
+      this.hotnews = data;
     });
   },
   watch: {
     tmpBookmark(val) {
-      this.bookmarks.unshift(val)
-    }
-  }
+      this.bookmarks.unshift(val);
+    },
+  },
 };
 </script>
 
