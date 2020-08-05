@@ -23,7 +23,7 @@ RecommendModel.init({
     underscored:true
 })
 
-/** 自动新增字段 */
+/** 自动更新字段 */
 RecommendModel.sync({ alter: true })
 
 module.exports = RecommendModel

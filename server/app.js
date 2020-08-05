@@ -15,7 +15,9 @@ const routes = requireDirectory(module, './router', {
     visit: funcHandler
 });
 
-app.listen(3000);
+app.listen(3000, res => {
+    console.log('serve start at: http://localhost:3000')
+});
 
 function funcHandler(obj) {
     if (obj instanceof Router) {

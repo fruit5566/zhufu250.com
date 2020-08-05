@@ -18,7 +18,7 @@ class BookMarkModelAction {
             order: [
                 ['id', 'DESC']
             ],
-            limit: 50
+            limit: 100
         })
     }
 
