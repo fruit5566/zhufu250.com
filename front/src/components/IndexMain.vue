@@ -3,6 +3,7 @@
     <div class="main container">
       <div class="left">
         <BookmarkItem v-for="item of bookmarks" :key="item.id" :item="item"></BookmarkItem>
+        <LoadMoreBar @action="getMarkListByPage" :loading="loading" v-if="showLoadMore"></LoadMoreBar>
       </div>
       <div class="right">
         <div class="recommend sec">
@@ -24,6 +25,7 @@
 import BookmarkItem from "./base/BookmarkItem";
 import RecommendItem from "./base/RecommendItem";
 import HotNewsItem from "./base/HotnewsItem";
+import LoadMoreBar from "./base/LoadMoreBar";
 import { getMarkList, getRecomendList, getHotNews } from "../api/index";
 
 export default {
@@ -32,18 +34,20 @@ export default {
     BookmarkItem,
     RecommendItem,
     HotNewsItem,
+    LoadMoreBar,
   },
   data() {
     return {
       bookmarks: [],
       recommends: [],
       hotnews: [],
+      page: 1,
+      loading: false,
+      showLoadMore: true,
     };
   },
   created() {
-    getMarkList().then((data) => {
-      this.bookmarks = data;
-    });
+    this.getMarkListByPage();
 
     getRecomendList().then((data) => {
       this.recommends = data;
@@ -52,6 +56,19 @@ export default {
     getHotNews().then((data) => {
       this.hotnews = data;
     });
+  },
+  methods: {
+    getMarkListByPage() {
+      getMarkList(this.page).then((data) => {
+        this.loading = false;
+        if (data && data.length) {
+          this.bookmarks = this.bookmarks.concat(data);
+          this.page++;
+        } else {
+          this.showLoadMore = false;
+        }
+      });
+    },
   },
   watch: {
     tmpBookmark(val) {
