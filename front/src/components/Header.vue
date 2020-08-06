@@ -1,34 +1,51 @@
 <template>
-<div>
-  <div class="header clearfix">
-    <div class="container nav clearfix">
-      <a class="item" href="/">首页</a>
-      <a
-        class="item"
-        href="https://www.github.com/fruit5566/zhufu250.com"
-        target="_blank"
-        title="本站源码"
-      >GitHub</a>
-      <a class="item" href="https://zhufu250.com/cms" target="_blank" title="后台管理系统">CMS</a>
-      <a class="item" @click="download" title="导出为标准书签文件">导出</a>
-      <input type="text" class="search" placeholder="功能开发中..." />
-      <span class="collect" @click="collect">收录网站</span>
+  <div>
+    <div class="header clearfix">
+      <div class="container nav clearfix">
+        <a class="item" href="/">首页</a>
+        <a
+          class="item"
+          href="https://www.github.com/fruit5566/zhufu250.com"
+          target="_blank"
+          title="本站源码"
+        >GitHub</a>
+        <a class="item" href="https://zhufu250.com/cms" target="_blank" title="后台管理系统">CMS</a>
+        <a class="item" @click="download" title="导出为标准书签文件">导出</a>
+        <input
+          type="text"
+          class="search"
+          v-model="key"
+          @keyup.enter="searchAction"
+          placeholder="输入关键字"
+        />
+        <span class="collect" @click="collect">收录网站</span>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
-
+import { getQueryParam } from "@/utils/urlParse";
 export default {
+  data() {
+    return { key: "" };
+  },
+  created() {
+    let key = getQueryParam("key");
+    if (key) this.key = decodeURIComponent(key);
+  },
   methods: {
+    searchAction() {
+      console.log(this.key);
+      location.href = "/search?key=" + this.key;
+    },
     download() {
-      this.getBlob(`${process.env.VUE_APP_API_URL}/download`).then(blob => {
+      this.getBlob(`${process.env.VUE_APP_API_URL}/download`).then((blob) => {
         this.saveAs(blob, "bookmark.html");
       });
     },
     collect() {
-      this.$parent.visibleDialog = true
+      this.$parent.visibleDialog = true;
     },
     saveAs(blob, filename) {
       if (window.navigator.msSaveOrOpenBlob) {
@@ -47,7 +64,7 @@ export default {
       }
     },
     getBlob(url) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         const xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
         xhr.responseType = "blob";
@@ -58,8 +75,8 @@ export default {
         };
         xhr.send();
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -94,7 +111,7 @@ export default {
   width: 35%;
   height: 34px;
   padding: 1px 12px;
-  border: 1px solid #e5e5e5;
+
   border-radius: 4px;
 }
 .nav .collect {

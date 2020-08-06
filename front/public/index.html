@@ -10,7 +10,6 @@
       #app {
         width: 100%;
       }
-
       body {
         font-family: Avenir, Helvetica, Arial, sans-serif;
         font-size: 16px;
@@ -126,6 +125,16 @@
         line-height: normal;
       }
 
+      input {
+        background: none;
+        outline: none;
+        border: 1px solid #ccc;
+        /* border: 1px solid #e5e5e5; */
+      }
+      input:focus {
+        border: 1px solid #009a61;
+      }
+
       input[type='checkbox'],
       input[type='radio'] {
         box-sizing: border-box;
@@ -170,10 +179,6 @@
         font-family: inherit;
         font-size: inherit;
         line-height: inherit;
-      }
-
-      input {
-        border: none;
       }
 
       ul {

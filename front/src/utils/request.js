@@ -1,5 +1,6 @@
 import axios from 'axios';
-
+import Vue from 'vue';
+// console.log(Vue.prototype.$toast);
 const instance = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
 });
@@ -24,6 +25,20 @@ instance.interceptors.response.use(
   },
   error => {
     // 对响应错误做点什么
+    if (error && error.response && error.response.status) {
+      switch (error.response.status) {
+        case 500:
+          // console.log(error.response.data);
+          Vue.prototype.$toast(error.response.data);
+          break;
+        case 404:
+          // do something...
+          break;
+        default:
+          // do something...
+          break;
+      }
+    }
     return Promise.reject(error);
   }
 );

@@ -81,6 +81,7 @@ export default {
 <style scoped>
 .main {
   margin-top: 56px;
+  margin-bottom: 56px;
   display: flex;
   text-align: left;
 }
