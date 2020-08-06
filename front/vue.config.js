@@ -1,7 +1,7 @@
 module.exports = {
   publicPath: '/',
   outputDir: 'dist',
-  assetsDir: 'assets',
+  // assetsDir: 'assets',
   indexPath: 'index.html',
   filenameHashing: true,
   pages: {

@@ -37,7 +37,7 @@ export default {
   methods: {
     searchAction() {
       console.log(this.key);
-      location.href = "/search?key=" + this.key;
+      location.href = "/search.html?key=" + this.key;
     },
     download() {
       this.getBlob(`${process.env.VUE_APP_API_URL}/download`).then((blob) => {
