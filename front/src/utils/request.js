@@ -24,6 +24,21 @@ instance.interceptors.response.use(
   },
   error => {
     // 对响应错误做点什么
+    if (error && error.response && error.response.status) {
+      switch (error.response.status) {
+        case 500:
+          // do something...
+          console.log(error.response.message);
+          console.log(error.response);
+          break;
+        case 404:
+          // do something...
+          break;
+        default:
+          // do something...
+          break;
+      }
+    }
     return Promise.reject(error);
   }
 );

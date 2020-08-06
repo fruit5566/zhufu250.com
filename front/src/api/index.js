@@ -16,3 +16,12 @@ export function getRecomendList() {
 export function getHotNews() {
   return request({ url: '/hotnews' });
 }
+
+export function getSearchResult(key) {
+  return request({
+    url: '/hotnews',
+    params: {
+      key,
+    },
+  });
+}
