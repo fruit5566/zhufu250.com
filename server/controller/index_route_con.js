@@ -55,7 +55,6 @@ class IndexRouteAction {
 
   /** 查询书签列表 */
   static async findBookmarks(ctx) {
-    // TODO 分页查询
     let { page } = ctx.query;
     try {
       let result = await BookMarkModelAction.findBookmarksByPage(page);
@@ -79,11 +78,8 @@ class IndexRouteAction {
       let { title, desc } = await spiderTitleDesc(url);
 
       ctx.body = {
-        code: 0,
-        data: {
-          title,
-          desc,
-        },
+        title,
+        desc,
       };
     }
   }

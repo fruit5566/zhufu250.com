@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { getTitleAndDescByUrl, createBookMark } from "@/api/index";
 const URL_REG = /(^https?:\/\/)((\w+\.)+([a-z]{2,6})+|(([0-9]{1,3}\.){3}[0-9]{1,3}))/;
 export default {
   data() {
@@ -42,9 +42,9 @@ export default {
       meta: {
         url: "",
         title: "",
-        desc: ""
+        desc: "",
       },
-      disabled: true
+      disabled: true,
     };
   },
   methods: {
@@ -55,18 +55,21 @@ export default {
       this.createBookmark();
     },
     pasteHandle() {
+      if (!this.meta.url.startsWith("http")) {
+        this.meta.url = "http://" + this.meta.url;
+      }
+
+      //  fix: paste event无法立刻获取数据 (nextTick无效)
       setTimeout(() => {
         if (!URL_REG.test(this.meta.url)) {
-          this.$toast("网址不合法")
+          this.$toast("网址不合法");
+          this.meta = {};
           return;
         }
-        axios
-          .get(
-            `${process.env.VUE_APP_API_URL}/bookmark/title_desc?url=${this.meta.url}`
-          )
-          .then(res => {
-            this.meta.title = res.data.data.title;
-            this.meta.desc = res.data.data.desc;
+        getTitleAndDescByUrl(encodeURI(this.meta.url))
+          .then((data) => {
+            this.meta.title = data.title;
+            this.meta.desc = data.desc;
             this.disabled = false;
           })
           .catch(() => {
@@ -76,26 +79,25 @@ export default {
     },
     createBookmark() {
       if (!URL_REG.test(this.meta.url)) {
-        this.$toast("网址不合法")
+        this.$toast("网址不合法");
         return;
       }
-      axios
-        .post(`${process.env.VUE_APP_API_URL}/bookmark`, this.meta)
-        .then(res => {
-          let tmpMeta = Object.assign(
-            {
-              id: res.data.data.id,
-              created_at: new Date().getTime()
-            },
-            this.meta
-          );
-          this.$parent.tmpBookmark = tmpMeta;
-          this.meta = {};
-          this.$parent.visibleDialog = false;
-          this.disabled = true;
-        });
-    }
-  }
+
+      createBookMark(this.meta).then((data) => {
+        let tmpMeta = Object.assign(
+          {
+            id: data.id,
+            created_at: new Date().getTime(),
+          },
+          this.meta
+        );
+        this.$parent.tmpBookmark = tmpMeta;
+        this.meta = {};
+        this.$parent.visibleDialog = false;
+        this.disabled = true;
+      });
+    },
+  },
 };
 </script>
 
@@ -118,7 +120,6 @@ export default {
   background-color: #ffffff;
   border-radius: 7px;
   overflow: hidden;
-
 }
 .modal-header {
   height: 44px;
