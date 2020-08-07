@@ -5,7 +5,7 @@
         <BookmarkItem v-for="item of bookmarks" :key="item.id" :item="item"></BookmarkItem>
         <LoadMoreBar @action="getMarkListByPage" :loading="loading" v-if="showLoadMore"></LoadMoreBar>
       </div>
-      <div class="right">
+      <div class="right col-xs">
         <div class="recommend sec">
           <div class="title">推荐工具</div>
           <RecommendItem v-for="item of recommends" :key="item.id" :item="item" />
@@ -81,7 +81,7 @@ export default {
 <style scoped>
 .main {
   margin-top: 56px;
-  margin-bottom: 56px;
+  /* margin-bottom: 56px; */
   display: flex;
   text-align: left;
 }

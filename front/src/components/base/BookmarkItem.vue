@@ -40,6 +40,7 @@ export default {
   -webkit-box-orient: vertical;
   margin-bottom: 5px;
   cursor: pointer;
+  word-break: break-all;
 }
 .title:hover {
   color: #017e66;
@@ -59,6 +60,7 @@ export default {
   line-height: 1.6;
   color: #666;
   font-size: 14px;
+  word-break: break-all;
 }
 .time {
   font-size: 14px;

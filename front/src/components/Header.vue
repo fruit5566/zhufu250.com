@@ -10,7 +10,7 @@
           title="本站源码"
         >GitHub</a>
         <a class="item" href="https://zhufu250.com/cms" target="_blank" title="后台管理系统">CMS</a>
-        <a class="item" @click="download" title="导出为标准书签文件">导出</a>
+        <a class="item col-xs" @click="download" title="导出为标准书签文件">导出</a>
         <input
           type="text"
           class="search"
@@ -18,7 +18,7 @@
           @keyup.enter="searchAction"
           placeholder="输入关键字"
         />
-        <span class="collect" @click="collect">收录网站</span>
+        <span class="collect col-xs" @click="collect">收录网站</span>
       </div>
     </div>
   </div>
@@ -102,6 +102,11 @@ export default {
   font-weight: 700;
   margin-right: 35px;
   cursor: pointer;
+}
+@media (max-width: 768px) {
+  .nav .item {
+    margin-right: 20px;
+  }
 }
 .item:hover {
   text-decoration: none;

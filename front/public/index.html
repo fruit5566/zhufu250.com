@@ -220,8 +220,16 @@
       }
 
       .container {
-        width: 960px;
+        max-width: 960px;
+        padding: 0 15px;
         margin: 0 auto;
+      }
+    </style>
+    <style>
+      @media (max-width: 768px) {
+        .col-xs {
+          display: none;
+        }
       }
     </style>
   </head>
