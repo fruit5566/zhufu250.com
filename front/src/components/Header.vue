@@ -86,8 +86,7 @@ export default {
   top: 0;
   right: 0;
   left: 0;
-  height: 56px;
-  line-height: 56px;
+  padding: 10px 0;
   z-index: 2;
   border-bottom: 1px solid #e5e5e5;
   background: #fff;
@@ -114,15 +113,14 @@ export default {
 }
 .nav .search {
   width: 35%;
-  height: 34px;
+  height: 32px;
   padding: 1px 12px;
-
   border-radius: 4px;
 }
 .nav .collect {
   position: absolute;
-  top: 10px;
-  right: 0;
+  top: 0;
+  right: 10px;
   line-height: initial;
   font-size: 16px;
   font-weight: normal;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="main container">
+    <div class="main container clearfix">
       <div class="left">
         <BookmarkItem v-for="item of bookmarks" :key="item.id" :item="item"></BookmarkItem>
         <LoadMoreBar @action="getMarkListByPage" :loading="loading" v-if="showLoadMore"></LoadMoreBar>
@@ -80,17 +80,23 @@ export default {
 
 <style scoped>
 .main {
-  margin-top: 56px;
-  /* margin-bottom: 56px; */
-  display: flex;
+  padding-top: 60px;
+  padding-bottom: 60px;
   text-align: left;
+  display: flex;
 }
 .left {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  width: 60%;
+  float: left;
+  -webkit-flex: 1;
+  -ms-flex: 1;
   flex: 1;
 }
 .right {
-  width: 280px;
-  margin-left: 4%;
+  width: 300px;
+  padding-left: 4%;
   color: #555;
   font-size: 14px;
   white-space: nowrap;

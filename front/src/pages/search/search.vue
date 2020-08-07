@@ -1,13 +1,13 @@
 <template>
-  <div id="app" class="search_page">
+  <div id="app" class="search_page clearfix">
     <Header />
     <transition name="fade">
-      <div class="container">
+      <div class="container clearfix">
         <BookmarkItem v-for="item of bookmarks" :key="item.id" :item="item"></BookmarkItem>
         <div>{{message}}</div>
       </div>
     </transition>
-    <Footer />
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -44,23 +44,10 @@ export default {
 .search_page .collect {
   display: none;
 }
-html {
-  height: 100%;
-}
-body {
-  height: 100%;
-}
 </style>
 
 <style scoped>
 .search_page {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.container {
-  padding-top: 60px;
-  flex: 1;
+  padding: 60px 0;
 }
 </style>
