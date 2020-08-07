@@ -13,7 +13,7 @@
         <div class="hownews sec">
           <div class="title">百度热搜</div>
           <div class>
-            <HotNewsItem v-for="item of hotnews" :key="item.id" :item="item" />
+            <HotNewsItem v-for="(item, index) of hotnews" :key="index" :item="item" />
           </div>
         </div>
       </div>
@@ -49,25 +49,37 @@ export default {
   created() {
     this.getMarkListByPage();
 
-    getRecomendList().then((data) => {
-      this.recommends = data;
-    });
+    getRecomendList()
+      .then((data) => {
+        this.recommends = data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-    getHotNews().then((data) => {
-      this.hotnews = data;
-    });
+    getHotNews()
+      .then((data) => {
+        this.hotnews = data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   methods: {
     getMarkListByPage() {
-      getMarkList(this.page).then((data) => {
-        this.loading = false;
-        if (data && data.length) {
-          this.bookmarks = this.bookmarks.concat(data);
-          this.page++;
-        } else {
-          this.showLoadMore = false;
-        }
-      });
+      getMarkList(this.page)
+        .then((data) => {
+          this.loading = false;
+          if (data && data.length) {
+            this.bookmarks = this.bookmarks.concat(data);
+            this.page++;
+          } else {
+            this.showLoadMore = false;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   watch: {

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './index.vue';
 import toast from '@/components/plugin/toast';
+// import '@/utils/polifill';
 
 Vue.use(toast);
 

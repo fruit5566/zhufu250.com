@@ -35,6 +35,8 @@ export default {
       getSearchResult(key).then((data) => {
         this.bookmarks = data;
         if (!data || !data.length) this.message = "无数据";
+      }).catch(err => {
+        console.log(err);
       });
   },
 };
