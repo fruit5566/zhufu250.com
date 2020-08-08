@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a :href="item.url" target="_blank">{{item.title}}</a>
+    <a :href="item.url" target="_blank">{{ item.title }}</a>
   </div>
 </template>
 
@@ -10,5 +10,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

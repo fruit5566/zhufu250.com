@@ -6,13 +6,7 @@
         <div class="modal-content">
           <div class="m-row">
             <span>网址：</span>
-            <input
-              type="text"
-              placeholder="粘贴网址或输入网址(Enter)，自动抓取标题和简介"
-              v-model.trim="meta.url"
-              @paste="pasteHandle"
-              @keyup.enter="pasteHandle"
-            />
+            <input type="text" placeholder="粘贴网址或输入网址(Enter)，自动抓取标题和简介" v-model.trim="meta.url" @paste="pasteHandle" @keyup.enter="pasteHandle" />
           </div>
           <div class="m-row">
             <span>标题：</span>
@@ -42,9 +36,9 @@ export default {
       meta: {
         url: "",
         title: "",
-        desc: "",
+        desc: ""
       },
-      disabled: true,
+      disabled: true
     };
   },
   methods: {
@@ -67,7 +61,7 @@ export default {
           return;
         }
         getTitleAndDescByUrl(encodeURI(this.meta.url))
-          .then((data) => {
+          .then(data => {
             this.meta.title = data.title;
             this.meta.desc = data.desc;
             this.disabled = false;
@@ -83,11 +77,11 @@ export default {
         return;
       }
 
-      createBookMark(this.meta).then((data) => {
+      createBookMark(this.meta).then(data => {
         let tmpMeta = Object.assign(
           {
             id: data.id,
-            created_at: new Date().getTime(),
+            created_at: new Date().getTime()
           },
           this.meta
         );
@@ -96,8 +90,8 @@ export default {
         this.$parent.visibleDialog = false;
         this.disabled = true;
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

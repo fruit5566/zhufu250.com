@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="toast" v-show="visible">{{message}}</div>
+    <div class="toast" v-show="visible">{{ message }}</div>
   </transition>
 </template>
 
@@ -23,7 +23,7 @@ export default {
   padding: 15px;
   border-radius: 4px;
   white-space: nowrap;
-  background-color:#f3f3f3;
+  background-color: #f3f3f3;
   text-align: center;
   color: red;
   top: 10px;

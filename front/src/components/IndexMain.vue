@@ -34,7 +34,7 @@ export default {
     BookmarkItem,
     RecommendItem,
     HotNewsItem,
-    LoadMoreBar,
+    LoadMoreBar
   },
   data() {
     return {
@@ -43,32 +43,32 @@ export default {
       hotnews: [],
       page: 1,
       loading: false,
-      showLoadMore: true,
+      showLoadMore: true
     };
   },
   created() {
     this.getMarkListByPage();
 
     getRecomendList()
-      .then((data) => {
+      .then(data => {
         this.recommends = data;
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
 
     getHotNews()
-      .then((data) => {
+      .then(data => {
         this.hotnews = data;
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   },
   methods: {
     getMarkListByPage() {
       getMarkList(this.page)
-        .then((data) => {
+        .then(data => {
           this.loading = false;
           if (data && data.length) {
             this.bookmarks = this.bookmarks.concat(data);
@@ -77,16 +77,16 @@ export default {
             this.showLoadMore = false;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
-    },
+    }
   },
   watch: {
     tmpBookmark(val) {
       this.bookmarks.unshift(val);
-    },
-  },
+    }
+  }
 };
 </script>
 

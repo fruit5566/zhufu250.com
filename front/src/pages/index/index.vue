@@ -24,14 +24,13 @@ export default {
     Footer,
     IndexMain,
     IndexMask,
-    ScrollTop,
+    ScrollTop
   },
   data() {
     return {
       visibleDialog: false,
-      tmpBookmark: {},
+      tmpBookmark: {}
     };
-  },
+  }
 };
 </script>
-

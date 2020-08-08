@@ -15,8 +15,7 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", () => {
-      let topDistance =
-        document.documentElement.scrollTop || document.body.scrollTop;
+      let topDistance = document.documentElement.scrollTop || document.body.scrollTop;
       if (topDistance > 500) {
         this.visible = true;
       } else {
@@ -28,7 +27,10 @@ export default {
     scrollTop(e) {
       e.currentTarget.style.bottom = 200 + "px";
       e.currentTarget.style.opacity = 0;
-      window.scroll({ top: 0, behavior: "smooth" });
+      window.scroll({
+        top: 0,
+        behavior: "smooth"
+      });
     }
   }
 };

@@ -4,7 +4,7 @@
     <transition name="fade">
       <div class="container clearfix">
         <BookmarkItem v-for="item of bookmarks" :key="item.id" :item="item"></BookmarkItem>
-        <div>{{message}}</div>
+        <div>{{ message }}</div>
       </div>
     </transition>
     <Footer class="footer" />
@@ -13,6 +13,7 @@
 
 <script>
 import Header from "@/components/Header.vue";
+
 import Footer from "@/components/Footer";
 import BookmarkItem from "@/components/base/BookmarkItem";
 import { getSearchResult } from "@/api/search";
@@ -21,24 +22,26 @@ export default {
   components: {
     Header,
     Footer,
-    BookmarkItem,
+    BookmarkItem
   },
   data() {
     return {
       bookmarks: [],
-      message: "",
+      message: ""
     };
   },
   created() {
     let key = getQueryParam("key");
     key &&
-      getSearchResult(key).then((data) => {
-        this.bookmarks = data;
-        if (!data || !data.length) this.message = "无数据";
-      }).catch(err => {
-        console.log(err);
-      });
-  },
+      getSearchResult(key)
+        .then(data => {
+          this.bookmarks = data;
+          if (!data || !data.length) this.message = "无数据";
+        })
+        .catch(err => {
+          console.log(err);
+        });
+  }
 };
 </script>
 

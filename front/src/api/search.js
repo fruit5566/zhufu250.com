@@ -1,10 +1,10 @@
-import request from '@/utils/request';
+import request from "@/utils/request";
 
 export function getSearchResult(key) {
   return request({
-    url: '/search',
+    url: "/search",
     params: {
-      key,
-    },
+      key
+    }
   });
 }
