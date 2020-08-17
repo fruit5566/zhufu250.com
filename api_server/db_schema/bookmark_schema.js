@@ -1,6 +1,6 @@
-const { Sequelize, Model } = require('sequelize');
+const { Sequelize, Model } = require("sequelize");
 
-const sequelize = require('./_database');
+const sequelize = require("./_database");
 
 /**
  * 初始化表结构，
@@ -9,20 +9,20 @@ class BookMarkModel extends Model {}
 BookMarkModel.init(
   {
     url: {
-      type: Sequelize.STRING,
-      allowNull: false,
+      type: Sequelize.TEXT,
+      allowNull: false
     },
     title: Sequelize.STRING,
     desc: Sequelize.STRING,
     icon: Sequelize.STRING,
-    icon_base64: Sequelize.TEXT,
+    icon_base64: Sequelize.TEXT
   },
   {
     sequelize,
     // modelName: 'bookmark', // 表名
-    tableName: 'bookmark',
+    tableName: "bookmark",
     freezeTableName: true,
-    underscored: true,
+    underscored: true
   }
 );
 

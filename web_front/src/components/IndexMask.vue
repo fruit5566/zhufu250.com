@@ -49,23 +49,23 @@ export default {
       this.createBookmark();
     },
     pasteHandle() {
-      if (!this.meta.url.startsWith("http")) {
-        this.meta.url = "http://" + this.meta.url;
-      }
-
       //  fix: paste event无法立刻获取数据 (nextTick无效)
       setTimeout(() => {
-        let url = encodeURI(this.meta.url);
+        if (!this.meta.url.startsWith("https")) {
+          this.meta.url = "https://" + this.meta.url.replace("http://", "");
+        }
         if (!URL_REG.test(this.meta.url)) {
           this.$toast("网址不合法");
           this.meta = {};
           return;
         }
+
+        let url = encodeURI(this.meta.url);
         getTitleAndDescByUrl({ url })
           .then(res => {
             console.log(res);
-            this.meta.title = res.data.title;
-            this.meta.desc = res.data.desc;
+            this.meta.title = res.title;
+            this.meta.desc = res.desc;
             this.disabled = false;
           })
           .catch(() => {
@@ -86,7 +86,6 @@ export default {
           },
           this.meta
         );
-        // this.$parent.tmpBookmark = tmpMeta
         this.$store.dispatch("index/createBookmarks", tmpMeta);
         this.meta = {};
         this.$parent.visibleDialog = false;
