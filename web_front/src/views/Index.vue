@@ -13,9 +13,9 @@
         </div>
         <div class>
           <div class="title">百度热搜</div>
-          <!-- <transition-group name="fade"> -->
-          <HotnewsItem2 v-for="(item, index) of hotnews" :key="index" :item="item" />
-          <!-- </transition-group> -->
+          <transition-group name="fade">
+            <HotnewsItem2 v-for="item of hotnews" :key="item.id" :item="item" />
+          </transition-group>
         </div>
       </div>
     </div>

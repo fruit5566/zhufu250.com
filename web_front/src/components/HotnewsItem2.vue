@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <a :href="'https://www.baidu.com/s?wd=' + item.name" target="_blank">{{ item.name }}</a>
+    <a :href="'https://www.baidu.com/s?wd=' + item.title" target="_blank">{{ item.title }}</a>
     <span class="num">{{ item.num }}</span>
   </div>
 </template>
