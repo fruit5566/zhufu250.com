@@ -1,7 +1,8 @@
 const urlA = require("url");
 const BookMarkModelAction = require("../db_model/bookmark_model");
 const RecommendModelAction = require("../db_model/recommend_model");
-const { spiderTitleDesc, spiderIcon } = require("../libs/icon_title_desc_spider");
+const spiderIconTitleDesc = require("../libs/icon_title_desc_spider");
+const iconToBase64 = require("../libs/icon_to_base64");
 const hotnews = require("../libs/hotnews_spider.js");
 const BookMarkTEMP = require("./../utils/bookmarksTemplate");
 
@@ -11,7 +12,7 @@ class IndexRouteAction {
   /** 新建书签 */
   static async createBookmark(ctx) {
     try {
-      let { url, title, desc } = ctx.request.body;
+      let { url, title, desc, icon } = ctx.request.body;
 
       if (!URL_REG.test(url) || url.length > 512) {
         ctx.status = 400;
@@ -21,12 +22,11 @@ class IndexRouteAction {
         };
         return;
       } else if (!title || !desc) {
-        const result = await spiderTitleDesc(url);
+        const result = await spiderIconTitleDesc(url);
         title = title || result.title;
         desc = desc || result.desc;
+        icon = result.icon;
       }
-      const urlParse = urlA.parse(url);
-      const icon = `${urlParse.protocol}//${urlParse.host}/favicon.ico`;
       const id = await BookMarkModelAction.addBookmark({
         url,
         title,
@@ -34,16 +34,13 @@ class IndexRouteAction {
         icon
       });
 
-      spiderIcon(url).then(base64 => {
+      ctx.body = {
+        id
+      };
+
+      iconToBase64(icon).then(base64 => {
         BookMarkModelAction.updateIconById(id, base64);
       });
-
-      ctx.body = {
-        code: 0,
-        data: {
-          id
-        }
-      };
     } catch (error) {
       console.log(error);
       ctx.status = 500;
@@ -72,11 +69,12 @@ class IndexRouteAction {
         message: "url too long or null"
       };
     } else {
-      let { title, desc } = await spiderTitleDesc(url);
+      let { title, desc, icon } = await spiderIconTitleDesc(url);
 
       ctx.body = {
         title,
-        desc
+        desc,
+        icon
       };
     }
   }

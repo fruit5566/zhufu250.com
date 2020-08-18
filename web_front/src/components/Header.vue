@@ -4,7 +4,7 @@
       <div class="container clearfix">
         <a class="item" href="/">首页</a>
         <a class="item" href="https://www.github.com/fruit5566/zhufu250.com" target="_blank" title="本站源码">GitHub</a>
-        <a class="item" href="https://zhufu250.com/cms" target="_blank" title="后台管理系统">CMS</a>
+        <a class="item" href="https://cms.zhufu250.com/" target="_blank" title="后台管理系统">CMS</a>
         <a class="item col-xs" @click="download" title="导出为标准书签文件">导出</a>
         <input type="text" class="search col-xs" v-model="key" @keyup.enter="searchAction" placeholder="输入关键字" />
         <span class="collect" @click="collect" v-if="showCollect"> +书签</span>
@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     searchAction() {
-      console.log(this.key);
       location.href = "/search?key=" + this.key;
     },
     download() {

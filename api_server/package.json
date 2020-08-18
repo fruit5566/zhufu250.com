@@ -23,7 +23,8 @@
     "puppeteer": "^3.0.4",
     "request": "^2.88.2",
     "require-directory": "^2.1.1",
-    "sequelize": "^5.21.8"
+    "sequelize": "^5.21.8",
+    "svg64": "^1.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

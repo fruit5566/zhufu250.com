@@ -29,7 +29,7 @@ pageInit();
 
 const hotnews = async () => {
   /** 锁 解决： Execution context was destroyed */
-  if (block) return Promise.resolve(tempHotNews);
+  if (block) return tempHotNews;
 
   try {
     block = true;
@@ -80,7 +80,7 @@ const hotnews = async () => {
 
   tempHotNews = hotlist;
   block = false;
-  return Promise.resolve(hotlist);
+  return hotlist;
 
   /** 这种方法代码简单，api获取数据时间长 60ms左右 */
   // console.time()

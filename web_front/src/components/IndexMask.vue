@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { debounce } from "lodash";
 import { getTitleAndDescByUrl, createBookMark } from "@/api/index";
 const URL_REG = /(^https?:\/\/)((\w+\.)+([a-z]{2,6})+|(([0-9]{1,3}\.){3}[0-9]{1,3}))/;
 export default {
@@ -45,9 +46,16 @@ export default {
     cancelHander() {
       this.$parent.visibleDialog = false;
     },
-    confirmHander() {
-      this.createBookmark();
-    },
+    confirmHander: debounce(
+      function() {
+        this.createBookmark();
+      },
+      1000,
+      {
+        leading: true,
+        trailing: false
+      }
+    ),
     pasteHandle() {
       //  fix: paste event无法立刻获取数据 (nextTick无效)
       setTimeout(() => {
@@ -63,9 +71,9 @@ export default {
         let url = encodeURI(this.meta.url);
         getTitleAndDescByUrl({ url })
           .then(res => {
-            console.log(res);
             this.meta.title = res.title;
             this.meta.desc = res.desc;
+            this.meta.icon = res.icon;
             this.disabled = false;
           })
           .catch(() => {
@@ -82,7 +90,7 @@ export default {
         let tmpMeta = Object.assign(
           {
             id: data.id,
-            created_at: new Date().getTime()
+            created_at: new Date().toLocaleTimeString()
           },
           this.meta
         );
