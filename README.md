@@ -7,12 +7,15 @@
 ### 前端 web_front
 
 > @vue/cli4 vue + SSR + Store splitting; 若后端渲染失败返回到前端渲染
+> [READ.ME](https://github.com/fruit5566/vue-cli4-ssr-demo)
+
+> SSR ( koa2 ::3000 nginx 代理)
 
 ---
 
 ### 后端 api_server
 
-> koa2 + koa-router + mysql + nginx
+> koa2 + koa-router + mysql + nginx ( ::3001 )
 
 > ORM: sequlize
 
@@ -32,7 +35,9 @@
 
 ### 后台管理系统 cms_front
 
-> @vue/cli4 vue vuex router 前端渲染 路由懒加载
+> @vue/cli vue vuex router element-ui 前端渲染 + 路由懒加载 + RESTful API
+
+> 模板 from [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
 
 ---
 
