@@ -6,14 +6,10 @@ import { asyncRoutes, constantRoutes } from '@/router'
  * @param route
  */
 function hasPermission(roles, route) {
-  // console.log(JSON.parse(JSON.stringify(roles)))
-  // console.log(route.meta)
   if (route.meta && route.meta.roles) {
-    const flag = roles.some(role => route.meta.roles.includes(role))
-    console.log(flag)
     return roles.some(role => route.meta.roles.includes(role))
   } else {
-    return false
+    return true
   }
 }
 
@@ -53,7 +49,7 @@ const mutations = {
 const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
-      let accessedRoutes = []
+      let accessedRoutes
       if (roles.includes('admin')) {
         accessedRoutes = asyncRoutes || []
       } else {

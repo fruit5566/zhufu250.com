@@ -1,13 +1,12 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'z-token'
+const TokenKey = 'Admin-Token'
 
 export function getToken() {
   return Cookies.get(TokenKey)
 }
 
 export function setToken(token) {
-  // console.log(token)
   return Cookies.set(TokenKey, token)
 }
 

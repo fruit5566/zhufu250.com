@@ -25,24 +25,13 @@ app.use(async (ctx, next) => {
     const html = await renderToString(ctx);
     ctx.body = html;
   } catch (error) {
-    console.log(error);
-    next();
+    if (error.code && error.code == 404) {
+      ctx.redirect("/404.html");
+    } else {
+      console.log(error);
+      next();
+    }
   }
-  // try {
-  //   // 匹配非静态资源非接口的get请求 渲染页面
-  //   if (ctx.method == "GET" && !ctx.href.includes("api")) {
-  //     const html = await renderToString(ctx);
-  //     ctx.body = html;
-  //   } else {
-  //     next();
-  //   }
-  // } catch (error) {
-  //   if (error.code && error.code == 404) {
-  //     ctx.redirect("/404.html");
-  //   } else {
-  //     throw error;
-  //   }
-  // }
 });
 
 // 加载 koa-router
