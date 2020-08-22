@@ -25,7 +25,6 @@ export default {
         }
         return scrollTop;
       }
-
       // 获取当前可视范围的高度
       function getClientHeight() {
         var clientHeight = 0;
@@ -36,14 +35,13 @@ export default {
         }
         return clientHeight;
       }
-
       // 获取文档完整的高度
       function getScrollHeight() {
         return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
       }
 
       // reachBottom
-      if (parseInt(getScrollTop() + getClientHeight()) + 10 > getScrollHeight() && !this.loading) {
+      if (parseInt(getScrollTop() + getClientHeight()) + 100 > getScrollHeight() && !this.loading) {
         this.$parent.loading = true;
         this.$emit("reachBottom");
       }
