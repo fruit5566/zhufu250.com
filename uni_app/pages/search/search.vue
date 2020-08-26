@@ -28,6 +28,7 @@
     },
     onLoad(option) {
       this.key = JSON.parse(decodeURIComponent(option.key))
+      this.setNavTitle()
       this.getBookmarks()
     },
     methods: {
@@ -45,8 +46,14 @@
             // console.log(res.data)
             this.dataList = res.data
             uni.hideKeyboard();
+            this.setNavTitle()
           },
         })
+      },
+      setNavTitle() {
+        uni.setNavigationBarTitle({
+          title: this.key + ' —搜索结果'
+        });
       }
     }
   }
@@ -127,7 +134,8 @@
   }
 
   .time {
-    margin-top: 4px;
+    display: flex;
+    width: 100%;
     font-size: 14px;
     color: $uni-text-color-grey;
   }

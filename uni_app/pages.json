@@ -7,22 +7,18 @@
   }, {
     "path": "pages/search/search",
     "style": {
-      "navigationBarTitleText": "bookmark"
+      "navigationBarTitleText": ""
     }
   }, {
     "path": "pages/webview/webview",
     "style": {
-      "navigationBarTitleText": "书签页",
-      "app-plus": {
-        "bounce": "none",
-        "scrollIndicator": "none"
-      }
+      "navigationBarTitleText": "书签页"
     }
   }],
   "globalStyle": {
     "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#007AFF",
+    "navigationBarTitleText": "书签",
+    "navigationBarBackgroundColor": "#007aff",
     "backgroundColor": "#FFFFFF"
   }
 }
