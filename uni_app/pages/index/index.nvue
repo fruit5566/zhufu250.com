@@ -1,0 +1,258 @@
+<template>
+  <view class="page">
+    <uni-status-bar class="status-bar"></uni-status-bar>
+    <waterfall class="list-view" fixFreezing="true" loadmoreoffset="10" :show-scrollbar="false" :bounce="false">
+      <refresh class="refresh" @refresh="onrefresh" @pullingdown="onpullingdown" :display="refreshing ? 'show' : 'hide'">
+        <div class="refresh-view">
+          <image class="refresh-icon" :src="refreshIcon" :style="{width: (refreshing || pulling) ? 0: '32px'}" :class="{'refresh-icon-active': refreshFlag}"></image>
+          <uni-load-more iconSize=20 v-if="refreshing" color="#ffffff" class="loading-icon" status="loading"
+            :contentText="loadingMoreText"></uni-load-more>
+          <text class="loading-text">{{refreshText}}</text>
+        </div>
+      </refresh>
+      <header style="position: sticky;">
+        <uni-search-bar class="search-bar"  @confirm="toSearchPage"></uni-search-bar>
+      </header>
+      <cell>
+        <view style="background-color: #fff; padding: 15px;">
+          <view class="item" v-for="item in dataList">
+            <navigator :url="'/pages/webview/webview?url='+ encodeURIComponent(JSON.stringify(item.url))">
+              <view class="title">
+                <!-- <view style="width: 14px;height: 14px; background-color: #007AFF; position: absolute;top: 2px; left: 1px;"></view> -->
+                <image class="web_icon" @error="imageErr" :src="item.icon||'https://zhufu250.com/favicon.ico'" mode=""></image>
+                <text class="title">{{item.title}}</text>
+              </view>
+              
+            </navigator>
+            <text class="desc">{{item.desc}}</text>
+            <text class="time">{{item.created_at}}</text>
+          </view>
+        </view>
+      </cell>
+      <cell  v-if="sos"  @appear="loadmore"><text  class="up_loading">加载中...</text></cell>
+      <cell v-if='nodata'><text class="up_loading">没有更多数据了</text></cell>
+    </waterfall>
+  </view>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        page: 1,
+        dataList: [],
+        pulling: false,
+        refreshing: false,
+        refreshFlag: false,
+        refreshText: "",
+        isLoading: false,
+        loadingText: '加载中...',
+        loadingMoreText: {
+          contentdown: '',
+          contentrefresh: '',
+          contentnomore: ''
+        },
+        sos: false, // 是否还有更多
+        nodata: false,
+        loadTips: '加载中...',
+        pullTimer: null,
+        refreshIcon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjU5MDQ0REEzRTU1ODExRUFBRkI5QTBBQjQ0Nzc3QUU5IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjU5MDQ0REE0RTU1ODExRUFBRkI5QTBBQjQ0Nzc3QUU5Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTkwNDREQTFFNTU4MTFFQUFGQjlBMEFCNDQ3NzdBRTkiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NTkwNDREQTJFNTU4MTFFQUFGQjlBMEFCNDQ3NzdBRTkiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7CnGU9AAAArUlEQVR42uzZvQ6AIAxGUWhceP+HZcTJxcTITz8rye1u6RGQBnNrLe0cljYPAAAAAACwFIdnslpr16lYSsnMAAAAAAAAAAAAAID9AXn0Xqi3ZV6JkXbblMnVxU8vIRViJq99OZgin0UM6pnHIgf3eN4i36DHDFrUGvZafhaxEX99rfJWnPfXS9JKPBWpOD9kvdC9WNXhJ23mrqKV7UfmJx8AAAAAAAAAYD5OAQYAmnUT97LfaQoAAAAASUVORK5CYII="
+      }
+    },
+    onReady() {
+      this.getBookmarks()
+    },
+    methods: {
+      getBookmarks(refresh) {
+        this.isLoading = true;
+        uni.request({
+          url: 'https://api.zhufu250.com/bookmarks',
+          method: 'GET',
+          data: {
+            page: this.page
+          },
+          success: (res) => {
+            if (refresh) {
+              this.dataList = res.data;
+            } else {
+              this.dataList = this.dataList.concat(res.data);
+            }
+            if (res.data.length < 10) {
+              this.sos = false
+              this.nodata = true
+            } else {
+              this.page++
+              this.sos = true
+              this.nodata = false
+            }
+          },
+          complete: (res) => {
+            this.isLoading = false;
+            this.refreshing = false;
+            this.refreshFlag = false;
+            this.refreshText = "已刷新";
+            if (this.pullTimer) {
+              clearTimeout(this.pullTimer);
+            }
+            this.pullTimer = setTimeout(() => {
+              this.pulling = false;
+            }, 1000);
+          }
+        })
+      },
+      onrefresh(e) {
+        this.pulling = true;
+        this.refreshing = true;
+        this.refreshText = "正在刷新...";
+        this.page = 1
+        this.getBookmarks(true)
+      },
+      onpullingdown(e) {
+        if (this.refreshing) {
+          return;
+        }
+
+        this.pulling = false;
+        if (Math.abs(e.pullingDistance) > Math.abs(e.viewHeight)) {
+          this.refreshFlag = true;
+          this.refreshText = "释放立即刷新";
+        } else {
+          this.refreshFlag = false;
+          this.refreshText = "下拉可以刷新";
+        }
+      },
+      loadmore() {
+        if (!this.isLoading && this.sos) {
+          this.getBookmarks()
+        }
+      },
+      toSearchPage(e) {
+        console.log(e.value)
+        uni.navigateTo({
+          url: '/pages/search/search?key=' + encodeURIComponent(JSON.stringify(e.value))
+        })
+      },
+      imageErr() {
+        // console.log('image error')
+      }
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+  .page {
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .list-view {
+    flex: 1;
+    width: 750rpx;
+    flex-direction: column;
+    background-color: $uni-color-primary;
+  }
+
+  .status-bar {
+    background-color: $uni-color-primary;
+  }
+
+  .search-bar {
+    background-color: $uni-color-primary;
+    padding-top: 14px;
+    padding-bottom: 12px;
+  }
+
+  .cell {
+    padding: 10px;
+  }
+
+  .refresh {
+    color: #FFFFFF;
+    background-color: $uni-color-primary;
+    justify-content: center;
+  }
+
+  .refresh-view {
+    /* #ifndef APP-NVUE */
+    display: flex;
+    /* #endif */
+    width: 750rpx;
+    height: 64px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .refresh-icon {
+    width: 32px;
+    height: 32px;
+    transition-duration: .5s;
+    transition-property: transform;
+    transform: rotate(0deg);
+    transform-origin: 15px 15px;
+  }
+
+  .refresh-icon-active {
+    transform: rotate(180deg);
+  }
+
+  .loading-icon {
+    width: 26px;
+    height: 24px;
+  }
+
+  .loading-text {
+    color: #FFFFFF;
+    margin-left: 2px;
+    font-size: 16px;
+  }
+
+  .item {
+    padding: 10px 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #f5f5f5;
+    line-height: 16px;
+  }
+
+  .title {
+    flex-direction: row;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: $uni-text-color;
+    lines: 1;
+    // text-overflow: ellipsis;
+  }
+
+  .desc {
+    margin-top: 4px;
+    font-size: 14px;
+    color: #555;
+    lines: 2;
+    text-overflow: ellipsis;
+  }
+
+  .time {
+    margin-top: 4px;
+    font-size: 14px;
+    color: $uni-text-color-grey;
+  }
+
+  .up_loading {
+    text-align: center;
+    width: 750rpx;
+    font-size: 16px;
+    background-color: #fff;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 15px;
+    color: #555;
+  }
+  .web_icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+  }
+</style>

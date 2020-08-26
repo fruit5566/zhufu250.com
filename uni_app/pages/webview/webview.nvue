@@ -1,0 +1,27 @@
+<template>
+	<view class="webview">
+		<web-view class="webview" :src="src"></web-view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				src: ""
+			};
+		},
+    onLoad(option) {
+      this.src = JSON.parse(decodeURIComponent(option.url))
+      console.log(this.src)
+    }
+	}
+</script>
+
+<style lang="scss" scoped>
+.webview {
+  flex: 1;
+  width: 750rpx;
+  // height: 750rpx;
+}
+</style>
