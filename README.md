@@ -41,6 +41,34 @@
 
 ---
 
+### App
+
+> Dcloud 的 uniapp 技术栈 vue + nvue，
+> 首页 nvue 原生渲染 下拉刷新，上拉加载。
+> 搜索页 webview 渲染
+
+```
+├─ common
+|    └── uni.css # 通用css
+├─ componets  #组件
+├─ pages
+|    ├── index.nvue # 首页，原生渲染
+|    └── search.vue # 搜索结果页，webview渲染
+|    └── webview.nve # webview 外部网站，展示书签外部网页
+├─ static  #数据库控制层，对应表的增、删、改、查
+|    └── uni.ttf # 字体
+├─ unpackage  # App打包相关
+├─ release  # Android - apk包
+├─ App.vue
+├─ main.js
+├─ manifest.json # 打包配置
+├─ pages.json
+└─ uni.css 内置常用样式变量
+
+```
+
+## ![](./uni_app/release/show.gif)
+
 ### nginx 配置
 
 > https 华为免费单域名证书;
