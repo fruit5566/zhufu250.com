@@ -1,102 +1,86 @@
-const puppeteer = require("puppeteer");
+// const got = require('got')
+const cheerio = require("cheerio");
+const url = require("url");
+const request = require("request");
 
-const url = "https://www.baidu.com/s?wd=106960400";
-const HOT_NEWS_LIMIT = 10;
+const HEADERS = {
+  "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36",
+  Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+};
 
-let browser, page;
+const webUrl = "https://www.baidu.com/s?wd=106960400";
+const HOT_NEWS_LIMIT = 15;
+
 let tempHotNews = [];
 let block = false;
 
-const pageInit = async () => {
-  block = true;
-  browser = await puppeteer.launch({ args: ["--no-sandbox", "--disable-setuid-sandbox"] });
-  page = await browser.newPage();
-
-  /** 拦截请求，除了html，其余请求全部拦截，接口变快 */
-  await page.setRequestInterception(true);
-  page.on("request", interceptedRequest => {
-    if (interceptedRequest.url() == url) {
-      interceptedRequest.continue();
-    } else {
-      interceptedRequest.abort();
-    }
-  });
-  await page.goto(url);
-  block = false;
-};
-
-pageInit();
-
 const hotnews = async () => {
-  /** 锁 解决： Execution context was destroyed */
-  if (block) return tempHotNews;
+  block = true;
+  return new Promise((resolve, reject) => {
+    request(
+      {
+        method: "get",
+        url: encodeURI(webUrl),
+        headers: HEADERS
+      },
+      function (err, res, body) {
+        if (err) {
+          block = false;
+          resolve(tempHotNews);
+        } else {
+          $ = cheerio.load(body);
+          // console.log(body);
+          let titles = [];
+          let nums = [];
 
-  try {
-    block = true;
-    await page.reload();
-  } catch (error) {
-    browser && browser.close();
-    await pageInit();
-  }
+          if ($(".opr-toplist1-subtitle").length) {
+            let array = $(".opr-toplist1-subtitle");
+            for (let index = 0; index < HOT_NEWS_LIMIT; index++) {
+              titles[index] = $(array[index]).attr("title");
+            }
+          } else if ($(".opr-toplist1-cut").length) {
+            let array = $(".opr-toplist1-cut");
+            for (let index = 0; index < HOT_NEWS_LIMIT; index++) {
+              titles[index] = $(array[index]).attr("title");
+            }
+          } else {
+            block = false;
+            resolve(tempHotNews);
+          }
 
-  /** 获取百度热搜title*/
-  let hotlistname = page.$$eval(
-    ".opr-toplist1-cut",
-    (el, HOT_NEWS_LIMIT) => {
-      let list = [];
-      for (let i = 0; i < HOT_NEWS_LIMIT; i++) {
-        list.push(el[i].innerText);
+          if ($(".toplist1-right-num").length) {
+            let array = $(".toplist1-right-num");
+            for (let index = 0; index < HOT_NEWS_LIMIT; index++) {
+              nums[index] = $(array[index]).text();
+            }
+          }
+          if ($(".opr-toplist1-right-hot").length) {
+            let array = $(".opr-toplist1-right-hot");
+            for (let index = 0; index < HOT_NEWS_LIMIT; index++) {
+              nums[index] = $(array[index]).text();
+            }
+          }
+
+          /** 合并数据结构 */
+          const hotlist = [];
+          for (let i = 0; i < HOT_NEWS_LIMIT; i++) {
+            hotlist.push({
+              id: i,
+              title: titles[i],
+              num: nums[i]
+            });
+          }
+
+          block = false;
+          tempHotNews = hotlist;
+          resolve(hotlist);
+          // console.log(hotlist);
+        }
       }
-      return list;
-    },
-    HOT_NEWS_LIMIT
-  );
-
-  /**获取百度热搜num */
-  let hotlistnum = page.$$eval(
-    ".opr-toplist1-right-hot",
-    (el, HOT_NEWS_LIMIT) => {
-      let list = [];
-      for (let i = 0; i < HOT_NEWS_LIMIT; i++) {
-        list.push(el[i].innerText);
-      }
-      return list;
-    },
-    HOT_NEWS_LIMIT
-  );
-
-  /** await 并发执行 */
-  const [titles, nums] = await Promise.all([hotlistname, hotlistnum]);
-
-  /** 合并数据结构 */
-  const hotlist = [];
-  for (let i = 0; i < HOT_NEWS_LIMIT; i++) {
-    hotlist.push({
-      id: i,
-      title: titles[i],
-      num: nums[i]
-    });
-  }
-
-  tempHotNews = hotlist;
-  block = false;
-  return hotlist;
-
-  /** 这种方法代码简单，api获取数据时间长 60ms左右 */
-  // console.time()
-  // let list = await page.$$eval('.opr-toplist1-table tr', () => {
-  //     let divs = document.querySelectorAll('.opr-toplist1-table tr')
-  //      let result = []
-  //      for (let i = 0; i < 10; i++) {
-  //          let name = divs[i].querySelector('.opr-toplist1-cut').innerText;
-  //          let num =  divs[i].querySelector('.opr-toplist1-right-hot').innerText;
-  //          result.push({name, num})
-  //      }
-  //      return result;
-  //  })
-  // return Promise.resolve(list)
-  //  console.log(list)
-  //  console.timeEnd()
+    );
+  });
 };
+
+hotnews();
 
 module.exports = hotnews;
