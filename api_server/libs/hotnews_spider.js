@@ -8,7 +8,7 @@ const HEADERS = {
   Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
 };
 
-const webUrl = "https://www.baidu.com/s?wd=106960400";
+const webUrl = "https://www.baidu.com/s?wd=106960400&usm=3&rsv_idx=2&rsv_page=1";
 const HOT_NEWS_LIMIT = 15;
 
 let tempHotNews = [];
@@ -46,6 +46,7 @@ const hotnews = async () => {
           } else {
             block = false;
             resolve(tempHotNews);
+            return;
           }
 
           if ($(".toplist1-right-num").length) {
@@ -81,6 +82,6 @@ const hotnews = async () => {
   });
 };
 
-hotnews();
+// hotnews();
 
 module.exports = hotnews;
