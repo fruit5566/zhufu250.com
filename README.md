@@ -67,7 +67,7 @@
 
 ```
 
-## ![](https://cdn.zhufu250.com/app_demo.gif)
+## ![](./uni_app/release/app_demo.gif)
 
 ### nginx 配置
 
