@@ -18,7 +18,7 @@
     "koa-router": "^8.0.8",
     "koa2-cors": "^2.0.6",
     "mime-types": "^2.1.27",
-    "moment": "^2.25.3",
+    "moment": "^2.29.2",
     "mysql2": "^2.1.0",
     "puppeteer": "^3.0.4",
     "request": "^2.88.2",
